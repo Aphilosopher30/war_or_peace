@@ -1,5 +1,4 @@
 require './lib/card'
-require 'pry'
 
 class Deck
   attr_accessor :cards
@@ -43,7 +42,3 @@ class Deck
   end
 
 end
-
-
-
-binding.pry

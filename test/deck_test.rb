@@ -3,8 +3,6 @@ require 'minitest/pride'
 require './lib/deck'
 require './lib/card'
 
-
-
 class DeckTest < Minitest::Test
   def test_the_deck_exists
     deck = Deck.new([Card.new(:diamond, 'Queen', 12), Card.new(:spade, '3', 3), Card.new(:heart, 'Ace', 14)])
@@ -84,6 +82,5 @@ class DeckTest < Minitest::Test
     assert_equal [card_1, card_2, card_3, card_4], deck.add_card(card_4)
 
   end
-
 
 end
