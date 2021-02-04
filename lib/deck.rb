@@ -1,14 +1,11 @@
 require './lib/card'
-
-
+require 'pry'
 
 class Deck
+  attr_accessor :cards
+
   def initialize(cards)
     @cards  = cards
-  end
-
-  def cards
-    return @cards
   end
 
   def rank_of_card_at(index_number)
@@ -24,7 +21,6 @@ class Deck
     end
 
     return high_cards
-
   end
 
   def percent_high_ranking
@@ -37,24 +33,17 @@ class Deck
     return percentage_rounded
   end
 
-#this always removes the TOP card. Aka, the one that is first in the array or all cards
-#also note that it returns the card that you are going to remove
   def remove_card
     top_card = self.cards[0]
     self.cards.delete(top_card)
-    return top_card
   end
 
   def add_card(new_card)
     self.cards.append(new_card)
   end
 
-
-
-
-
-
-
-
-
 end
+
+
+
+binding.pry
