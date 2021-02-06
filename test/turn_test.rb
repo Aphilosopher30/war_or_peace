@@ -39,7 +39,7 @@ class TurnTest < Minitest::Test
     assert_equal @player_2, @turn.player2
   end
 
-  def test_it_can_assign_a_type
+  def test_it_has_a_type
     assert_equal :basic, @turn.type
   end
 
@@ -71,9 +71,9 @@ class TurnTest < Minitest::Test
     turn_b = Turn.new(player_1b, player_2b)
     turn_c = Turn.new(player_1c, player_2c)
 
-    assert_equal :basic, @turn.type
-    assert_equal :war, turn_b.type
-    assert_equal :mutually_assured_destruction, turn_c.type
+    assert_equal :basic, @turn.assign_type
+    assert_equal :war, turn_b.assign_type
+    assert_equal :mutually_assured_destruction, turn_c.assign_type
 
 
   end

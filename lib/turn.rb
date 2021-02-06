@@ -4,15 +4,16 @@ require './lib/player'
 #require 'pry'; binding.pry
 
 class Turn
-  attr_reader :player1, :player2, :spoils_of_war
+  attr_reader :player1, :player2, :spoils_of_war, :type
 
   def initialize(player1, player2)
     @player1 = player1
     @player2 = player2
     @spoils_of_war = []
+    @type = self.assign_type
   end
 
-  def type
+  def assign_type
     if @player1.deck.cards[0].rank != @player2.deck.cards[0].rank
       return :basic
     elsif @player1.deck.cards[2].rank != @player2.deck.cards[2].rank
@@ -21,7 +22,6 @@ class Turn
       return :mutually_assured_destruction
     end
   end
-
 
   def winning_player(card_index)
     if @player1.deck.cards[card_index].rank > @player2.deck.cards[card_index].rank
@@ -44,6 +44,7 @@ class Turn
       print "Oops, something whent wrong with the 'winner method'!"
     end
   end
+
 
   def pile_cards
     if self.type == :basic
