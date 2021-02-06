@@ -32,11 +32,11 @@ class TurnTest < Minitest::Test
   end
 
   def test_there_is_one_player
-    assert_equal @player_1, @turn.player_1
+    assert_equal @player_1, @turn.player1
   end
 
   def test_there_is_another_player
-    assert_equal @player_2, @turn.player_2
+    assert_equal @player_2, @turn.player2
   end
 
   def test_it_can_assign_a_type
@@ -181,8 +181,8 @@ class TurnTest < Minitest::Test
 
 
     assert_equal [], turn_c.spoils_of_war
-    assert_equal [card5], turn_c.player_1.deck.cards
-    assert_equal [card6], turn_c.player_2.deck.cards
+    assert_equal [card5], turn_c.player1.deck.cards
+    assert_equal [card6], turn_c.player2.deck.cards
 
   end
 
@@ -222,8 +222,8 @@ class TurnTest < Minitest::Test
       turn_c.pile_cards
       turn_c.award_spoils(winner)
 
-      assert_equal [card5], turn_c.player_1.deck.cards
-      assert_equal [card6], turn_c.player_2.deck.cards
+      assert_equal [card5], turn_c.player1.deck.cards
+      assert_equal [card6], turn_c.player2.deck.cards
 
     end
 
