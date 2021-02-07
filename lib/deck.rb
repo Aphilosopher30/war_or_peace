@@ -46,7 +46,6 @@ class Deck
 
 #deleats a card from the top of a  deck.
   def remove_card
-    top_card = self.cards[0]
     self.cards.delete_at(0)
   end
 

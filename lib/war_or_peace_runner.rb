@@ -131,14 +131,15 @@ end
 player_a = Player.new("Aurora", deck_1)
 player_m = Player.new("Megan", deck_2)
 
+#this is where the setup ends and the game starts.
 game = Game.new(player_a, player_m)
-
 game.start
 
-#this while loop continually repeats turns,
+#this while loop continually repeats the process of takeing turns,
 #untill someone wins or we run out of turns
 while game.continue_game? == true
   p game.take_a_turn
 end
 
 p game.end_of_game_message
+#the game is now over

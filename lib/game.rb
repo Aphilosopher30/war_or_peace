@@ -2,9 +2,6 @@ require './lib/deck'
 require './lib/card'
 require './lib/player'
 require './lib/turn'
-#require './lib/war_or_peace_runner'
-
-
 
 
 class Game
@@ -16,7 +13,6 @@ class Game
     @max_number_of_turns = max_number_of_turns
     @turn_counter = 0
   end
-
 
   def print_intro_message
     p "Welcome to War! (or Peace) This game will be played with 52 cards."
@@ -37,7 +33,6 @@ class Game
     return start.upcase.strip
   end
 
-
   def increment_turn_counter
     @turn_counter += 1
   end
@@ -50,8 +45,6 @@ class Game
       return false
     end
   end
-
-
 
 #this method provides a printable summery describing what append and  much the winner has won
 #this method is used by turn summery, to find out what it need to print
@@ -69,7 +62,7 @@ class Game
 
 #returns a string we can print that provides info on the turn.
   def turn_summery(winner, turn)
-    "Turn #{@turn_counter}: " + turn.summery_of_what_happend_this_turn(winner)
+    "Turn #{@turn_counter}: " + self.summery_of_what_happend_this_turn(winner, turn)
   end
 
 #returns a printable string telling us who wone this crule game of war
@@ -98,14 +91,6 @@ class Game
     this_turn.award_spoils(the_winner)
 
     self.turn_summery(the_winner, this_turn)
-
   end
-
-
-
-
-
-
-
 
 end
