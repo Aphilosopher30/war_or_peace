@@ -1,0 +1,4 @@
+2, Heart, 2
+10, Heart, 10
+King, Heart, 13
+Ace, Heart, 14
