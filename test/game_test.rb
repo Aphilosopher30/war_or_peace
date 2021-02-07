@@ -96,6 +96,87 @@ class  GameTest < Minitest::Test
   end
 
   def test_the_game_can_start
+    skip
     assert_equal "GO", @game.start
   end
+
+  def test_it_has_a_turn_counter
+    assert_equal 0, @game.turn_number
+  end
+
+  def test_turn_counter_can_increase_once
+    @game.increment_turn_counter
+    assert_equal 1, @game.turn_number
+  end
+
+  def test_turn_counter_can_increase_multiple_times
+    10.times do
+      @game.increment_turn_counter
+    end
+    assert_equal 10, @game.turn_number
+  end
+
+  def test_continue_game?
+    assert_equal true, @game.continue_game?
+  end
+
+  def test_continue_game_when_a_player_lacks_cards?
+    list_of_no_cards = []
+    empty_deck = Deck.new(list_of_no_cards)
+    player_with_no_cards = Player.new("Mr. Mollassis", empty_deck)
+    game = Game.new(player_with_no_cards, @player2)
+    assert_equal false, game.continue_game?
+  end
+
+  def test_continue_game_when_counter_reaches_max?
+    game = Game.new(@player1, @player2, 10)
+    10.times do
+      game.increment_turn_counter
+    end
+    assert_equal false, game.continue_game?
+  end
+
+  def test_printable_results_of_turn
+    turn = Turn.new(@player1, @player2)
+    victor = turn.winner
+    assert_equal "Turn 0: Aurora won 0 cards", @game.printable_results_of_a_turn(victor, turn)
+  end
+
+
+  def test_end_message_can_award_victory_to_player_1
+    list_of_no_cards = []
+    empty_deck = Deck.new(list_of_no_cards)
+    player_with_no_cards = Player.new("Mr. Mollassis", empty_deck)
+    game = Game.new(@player1, player_with_no_cards)
+
+    assert_equal "*~*~*~* Magan has won the game! *~*~*~*", game.end_message
+  end
+
+  def test_end_message_can_award_victory_to_player_2
+    list_of_no_cards = []
+    empty_deck = Deck.new(list_of_no_cards)
+    player_with_no_cards = Player.new("Mr. Mollassis", empty_deck)
+    game = Game.new(player_with_no_cards, @player2)
+
+    assert_equal "*~*~*~* Aurora has won the game! *~*~*~*", game.end_message
+  end
+
+  def test_end_message_can_award_a_draw_if_no_cards
+    list_of_no_cards = []
+    empty_deck = Deck.new(list_of_no_cards)
+    player_with_no_cards = Player.new("Mr. Mollassis", empty_deck)
+    another_player_with_no_cards = Player.new("Mrs. Mollassis", empty_deck)
+
+    game = Game.new(player_with_no_cards, another_player_with_no_cards)
+    assert_equal "----DRAW----", game.end_message
+  end
+
+  def test_end_message_can_award_a_draw_if_turns_run_out
+
+    game = Game.new(@player1, @player2, 10)
+    10.times{game.increment_turn_counter}
+    assert_equal "----DRAW----", game.end_message
+  end
+
+
 end

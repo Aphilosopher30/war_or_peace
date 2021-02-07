@@ -35,4 +35,33 @@ class Game
     end
     return start.upcase.strip
   end
+
+  def increment_turn_counter
+    @turn_number += 1
+  end
+
+  def continue_game?
+    if @player1.has_lost? == false && @player2.has_lost? == false && @turn_number < @max_number_of_turns
+      return  true
+    else
+      return false
+    end
+  end
+
+  def printable_results_of_a_turn(winner, turn)
+    "Turn #{@turn_number}: " + turn.turn_summery(winner)
+  end
+
+  def end_message
+    if @player1.has_lost? == false && @player2.has_lost? == true
+      "*~*~*~* #{@player1.name} has won the game! *~*~*~*"
+    elsif @player2.has_lost? == false && @player1.has_lost? == true
+      "*~*~*~* #{@player2.name} has won the game! *~*~*~*"
+    elsif turn_number >= max_number_of_turns || (@player1.has_lost? && @player2.has_lost?)
+      "----DRAW----"
+    else
+      "something's wrong. we don't know who won."
+    end
+  end
+
 end
