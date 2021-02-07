@@ -13,11 +13,12 @@ class Turn
     @type = self.assign_type
   end
 
-#this method should run at
+#this method should run at initialization to determine what type this turn is.
+#after that it sould not be called.
   def assign_type
-    if @player1.deck.cards[0].rank != @player2.deck.cards[0].rank
+    if @player1.deck.rank_of_card_at(0) != @player2.deck.rank_of_card_at(0)
       return :basic
-    elsif @player1.deck.cards[2].rank != @player2.deck.cards[2].rank
+    elsif @player1.deck.rank_of_card_at(2) != @player2.deck.rank_of_card_at(2)
       return :war
     else
       return :mutually_assured_destruction
@@ -26,9 +27,9 @@ class Turn
 
 #this tells the winner function which player has a higher card a a specific index
   def winning_player(card_index)
-    if @player1.deck.cards[card_index].rank > @player2.deck.cards[card_index].rank
+    if @player1.deck.rank_of_card_at(card_index) > @player2.deck.rank_of_card_at(card_index)
       return @player1
-    elsif @player1.deck.cards[card_index].rank < @player2.deck.cards[card_index].rank
+    elsif @player1.deck.rank_of_card_at(card_index) < @player2.deck.rank_of_card_at(card_index)
       return @player2
     else
       print "Oops, something whent wrong with the 'winning_player method'!"
@@ -49,7 +50,7 @@ class Turn
   end
 
 #this method puts removes cards from each players deck
-#and puts them in a pile or deleats them from game
+#and puts them in spoils_of_war or deleats them from game
 #it knows how many cards to take based on the turn type
   def pile_cards
     if @type == :basic
