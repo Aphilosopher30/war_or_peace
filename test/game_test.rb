@@ -109,10 +109,10 @@ class  GameTest < Minitest::Test
     assert_equal false, game.continue_game?
   end
 
-  def test_printable_results_of_turn
+  def test_turn_summery
     turn = Turn.new(@player1, @player2)
     victor = turn.winner
-    assert_equal "Turn 0: Aurora won 0 cards", @game.printable_results_of_a_turn(victor, turn)
+    assert_equal "Turn 0: Aurora won 0 cards", @game.turn_summery(victor, turn)
   end
 
   def test_end_message_can_declare_victory_for_player_1
@@ -159,5 +159,66 @@ class  GameTest < Minitest::Test
     assert_equal [@card4, @card6, @card7, @card10, @card11, @card1, @card3], @game.player2.deck.cards
     assert_equal "Turn 1: Aurora won 2 cards", information_as_a_string
   end
+
+  def test_printable_summery_of_what_happend_this_turn_basic
+    turn = Turn.new(@player1, @player2)
+    victor = turn.winner
+    turn.pile_cards
+    assert_equal  "Aurora won 2 cards", @game.summery_of_what_happend_this_turn(victor, turn )
+  end
+
+  def test_printable_summery_of_what_happend_this_turn_war
+
+    card1 = Card.new(:heart, 'Jack', 11)
+    card2 = Card.new(:heart, '10', 10)
+    card3 = Card.new(:heart, '9', 9)
+    card4 = Card.new(:diamond, 'Jack', 11)
+    card5 = Card.new(:heart, '8', 8)
+    card6 = Card.new(:diamond, 'Queen', 12)
+    card7 = Card.new(:heart, '2', 2)
+    card8 = Card.new(:diamond, '2', 2)
+
+    deck_1b = Deck.new([card1, card2, card5, card8])
+    deck_2b = Deck.new([card4, card7, card3, card6])
+
+    player_1b = Player.new("Magan", deck_1b)
+    player_2b = Player.new("Aurora", deck_2b)
+
+    turn_b = Turn.new(player_1b, player_2b)
+    victor = turn_b.winner
+    turn_b.pile_cards
+
+    game = Game.new(player_1b, player_2b)
+
+    assert_equal "WAR - Aurora won 6 cards", game.summery_of_what_happend_this_turn(victor, turn_b)
+  end
+
+  def test_printable_summery_of_what_happend_this_turn_mutually_assured_distruction
+
+    card1 = Card.new(:heart, 'Jack', 11)
+    card2 = Card.new(:heart, '10', 10)
+    card3 = Card.new(:heart, '9', 9)
+    card4 = Card.new(:diamond, 'Jack', 11)
+    card5 = Card.new(:heart, '8', 8)
+    card6 = Card.new(:diamond, 'Queen', 12)
+    card7 = Card.new(:heart, '2', 2)
+    card8 = Card.new(:diamond, '2', 2)
+
+    deck_1c = Deck.new([card1, card2, card8, card5])
+    deck_2c = Deck.new([card4, card3, card7, card6])
+
+    player_1c = Player.new("Magan", deck_1c)
+    player_2c = Player.new("Aurora", deck_2c)
+
+    turn_c = Turn.new(player_1c, player_2c)
+    victor = turn_c.winner
+
+    game = Game.new(player_1c, player_2c)
+
+    assert_equal "*mutually assured destruction* 6 cards removed", game.summery_of_what_happend_this_turn(victor, turn_c)
+
+  end
+
+
 
 end

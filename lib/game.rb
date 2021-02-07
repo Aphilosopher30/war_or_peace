@@ -51,9 +51,25 @@ class Game
     end
   end
 
+
+
+#this method provides a printable summery describing what append and  much the winner has won
+#this method is used by turn summery, to find out what it need to print
+  def summery_of_what_happend_this_turn(winner, turn)
+    if turn.type == :basic
+      "#{winner.name} won #{turn.spoils_of_war.length} cards"
+    elsif turn.type == :war
+      "WAR - #{winner.name} won #{turn.spoils_of_war.length} cards"
+    elsif turn.type == :mutually_assured_destruction
+      "*mutually assured destruction* 6 cards removed"
+    else
+      "SOMETHING WENT HORRIBLY WRONG!!!"
+    end
+  end
+
 #returns a string we can print that provides info on the turn.
-  def printable_results_of_a_turn(winner, turn)
-    "Turn #{@turn_counter}: " + turn.turn_summery(winner)
+  def turn_summery(winner, turn)
+    "Turn #{@turn_counter}: " + turn.summery_of_what_happend_this_turn(winner)
   end
 
 #returns a printable string telling us who wone this crule game of war
@@ -81,8 +97,15 @@ class Game
     this_turn.pile_cards
     this_turn.award_spoils(the_winner)
 
-    self.printable_results_of_a_turn(the_winner, this_turn)
+    self.turn_summery(the_winner, this_turn)
 
   end
+
+
+
+
+
+
+
 
 end

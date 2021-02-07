@@ -37,6 +37,7 @@ class Turn
   end
 
 #this figurs out which player wins the conflict
+#NOTE: if you call pile_cards BEFOERE you call winner, you may get screwy resutls
   def winner
     if @type == :basic
       winner = self.winning_player(0)
@@ -71,7 +72,8 @@ class Turn
     end
   end
 
-#takes cards put in pile by
+#takes cards put in spoils_of_war by pile_cards,
+#and then it puts them on the bottom the winners deck.
   def award_spoils(winner)
     if winner == @player1 || winner == @player2
       winner.deck.cards.concat(self.spoils_of_war)
@@ -80,17 +82,5 @@ class Turn
     end
   end
 
-#this method provides a printable summery describing what append and  much the winner has won
-  def turn_summery(winner)
-    if @type == :basic
-      "#{winner.name} won #{self.spoils_of_war.length} cards"
-    elsif @type == :war
-      "WAR - #{winner.name} won #{self.spoils_of_war.length} cards"
-    elsif @type == :mutually_assured_destruction
-      "*mutually assured destruction* 6 cards removed"
-    else
-      "SOMETHING WENT HORRIBLY WRONG!!!"
-    end
-  end
 
 end

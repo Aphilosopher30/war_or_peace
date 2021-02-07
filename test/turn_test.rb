@@ -75,7 +75,6 @@ class TurnTest < Minitest::Test
     assert_equal :war, turn_b.assign_type
     assert_equal :mutually_assured_destruction, turn_c.assign_type
 
-
   end
 
   def test_winner
@@ -108,7 +107,6 @@ class TurnTest < Minitest::Test
     assert_equal "No Winner", turn_c.winner
 
   end
-
 
   def test_winning_player
 
@@ -224,63 +222,5 @@ class TurnTest < Minitest::Test
       assert_equal [card6], turn_c.player2.deck.cards
 
     end
-
-
-    def test_printable_turn_summery_basic
-      victor = @turn.winner
-      @turn.pile_cards
-      assert_equal  "Magan won 2 cards", @turn.turn_summery(victor)
-    end
-
-
-    def test_printable_turn_summery_war
-
-      card1 = Card.new(:heart, 'Jack', 11)
-      card2 = Card.new(:heart, '10', 10)
-      card3 = Card.new(:heart, '9', 9)
-      card4 = Card.new(:diamond, 'Jack', 11)
-      card5 = Card.new(:heart, '8', 8)
-      card6 = Card.new(:diamond, 'Queen', 12)
-      card7 = Card.new(:heart, '2', 2)
-      card8 = Card.new(:diamond, '2', 2)
-
-      deck_1b = Deck.new([card1, card2, card5, card8])
-      deck_2b = Deck.new([card4, card7, card3, card6])
-
-      player_1b = Player.new("Magan", deck_1b)
-      player_2b = Player.new("Aurora", deck_2b)
-
-      turn_b = Turn.new(player_1b, player_2b)
-      victor = turn_b.winner
-      turn_b.pile_cards
-
-      assert_equal "WAR - Aurora won 6 cards", turn_b.turn_summery(victor)
-    end
-
-    def test_pile_cards_for_mutully_assured_distruction
-
-      card1 = Card.new(:heart, 'Jack', 11)
-      card2 = Card.new(:heart, '10', 10)
-      card3 = Card.new(:heart, '9', 9)
-      card4 = Card.new(:diamond, 'Jack', 11)
-      card5 = Card.new(:heart, '8', 8)
-      card6 = Card.new(:diamond, 'Queen', 12)
-      card7 = Card.new(:heart, '2', 2)
-      card8 = Card.new(:diamond, '2', 2)
-
-      deck_1c = Deck.new([card1, card2, card8, card5])
-      deck_2c = Deck.new([card4, card3, card7, card6])
-
-      player_1c = Player.new("Magan", deck_1c)
-      player_2c = Player.new("Aurora", deck_2c)
-
-      turn_c = Turn.new(player_1c, player_2c)
-      victor = turn_c.winner
-
-      assert_equal "*mutually assured destruction* 6 cards removed", turn_c.turn_summery(victor)
-
-    end
-
-
 
 end
