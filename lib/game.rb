@@ -8,13 +8,13 @@ require './lib/turn'
 
 
 class Game
-  attr_reader :turn_number, :player1, :player2, :max_number_of_turns
+  attr_reader :turn_counter, :player1, :player2, :max_number_of_turns
 
   def initialize(player1, player2, max_number_of_turns = 1000000)
     @player1 = player1
     @player2 = player2
     @max_number_of_turns = max_number_of_turns
-    @turn_number = 0
+    @turn_counter = 0
   end
 
 
@@ -25,6 +25,7 @@ class Game
     p "------------------------------------------------------------------"
   end
 
+#This message does not let start the game untill you type "GO"
   def start
     self.print_intro_message
     start = gets
@@ -36,32 +37,52 @@ class Game
     return start.upcase.strip
   end
 
+
   def increment_turn_counter
-    @turn_number += 1
+    @turn_counter += 1
   end
 
+#this determines whether it's time to end the game
   def continue_game?
-    if @player1.has_lost? == false && @player2.has_lost? == false && @turn_number < @max_number_of_turns
+    if @player1.has_lost? == false && @player2.has_lost? == false && @turn_counter < @max_number_of_turns
       return  true
     else
       return false
     end
   end
 
+#returns a string we can print that provides info on the turn.
   def printable_results_of_a_turn(winner, turn)
-    "Turn #{@turn_number}: " + turn.turn_summery(winner)
+    "Turn #{@turn_counter}: " + turn.turn_summery(winner)
   end
 
-  def end_message
+#returns a printable string telling us who wone this crule game of war
+  def end_of_game_message
     if @player1.has_lost? == false && @player2.has_lost? == true
       "*~*~*~* #{@player1.name} has won the game! *~*~*~*"
     elsif @player2.has_lost? == false && @player1.has_lost? == true
       "*~*~*~* #{@player2.name} has won the game! *~*~*~*"
-    elsif turn_number >= max_number_of_turns || (@player1.has_lost? && @player2.has_lost?)
+    elsif turn_counter >= max_number_of_turns || (@player1.has_lost? && @player2.has_lost?)
       "----DRAW----"
     else
       "something's wrong. we don't know who won."
     end
+  end
+
+#this method takes a turn. this includes increasing the turn count,
+#as well as awarding cards to the winner,
+#and finally returning a string summerizing the changes that can be printed out
+  def take_a_turn
+    self.increment_turn_counter
+    this_turn = Turn.new(self.player1, self.player2)
+
+    the_winner = this_turn.winner
+
+    this_turn.pile_cards
+    this_turn.award_spoils(the_winner)
+
+    self.printable_results_of_a_turn(the_winner, this_turn)
+
   end
 
 end

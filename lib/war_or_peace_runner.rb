@@ -111,14 +111,13 @@ all_cards = [card1,
   card52]
 
 
-
-
 deck_1 = Deck.new([])
 deck_2 = Deck.new([])
 
-
-#this while loop deals out cards to both players.
-while all_cards.length > 1 #if we are given an un even number of cards, then the last card will not be assighned to either player.
+#this while loop deals out an equal number of cards to both players.
+#(Note that if we are given an uneven number of cards,
+#then the last card will not be assighned to either player.)
+while all_cards.length > 1
   card_b = all_cards.sample
   deck_2.add_card(card_b)
   all_cards.delete_at(all_cards.index(card_b))
@@ -136,19 +135,10 @@ game = Game.new(player_a, player_m)
 
 game.start
 
-#this while loop continually repeats turns
+#this while loop continually repeats turns,
 #untill someone wins or we run out of turns
 while game.continue_game? == true
-  game.increment_turn_counter
-  this_turn = Turn.new(game.player1, game.player2)
-
-  the_winner = this_turn.winner
-
-  this_turn.pile_cards
-  this_turn.award_spoils(the_winner)
-
-  p game.printable_results_of_a_turn(the_winner, this_turn)
-
+  p game.take_a_turn
 end
 
-p game.end_message
+p game.end_of_game_message
