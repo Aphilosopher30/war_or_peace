@@ -2,9 +2,7 @@ require './lib/deck'
 require './lib/card'
 require './lib/player'
 require './lib/turn'
-
-
-
+require './lib/game'
 
 card1 = Card.new(:heart, '2', 2)
 card2 = Card.new(:heart, '3', 3)
@@ -46,7 +44,7 @@ card37 = Card.new(:spade, 'Queen', 12)
 card38 = Card.new(:spade, 'King', 13)
 card39 = Card.new(:spade, 'Ace', 14)
 card40 = Card.new(:clubs, '2', 2)
-card42 = Card.new(:clubs, '3', 3)
+card41 = Card.new(:clubs, '3', 3)
 card42 = Card.new(:clubs, '4', 4)
 card43 = Card.new(:clubs, '5', 5)
 card44 = Card.new(:clubs, '6', 6)
@@ -60,57 +58,57 @@ card51 = Card.new(:clubs, 'King', 13)
 card52 = Card.new(:clubs, 'Ace', 14)
 
 all_cards = [card1,
-card2,
-card3,
-card4,
-card5,
-card6,
-card7,
-card8,
-card9,
-card10,
-card11,
-card12,
-card13,
-card14,
-card15,
-card16,
-card17,
-card18,
-card19,
-card20,
-card21,
-card22,
-card23,
-card24,
-card25,
-card26,
-card27,
-card28,
-card29,
-card30,
-card31,
-card32,
-card33,
-card34,
-card35,
-card36,
-card37,
-card38,
-card39,
-card40,
-card42,
-card42,
-card43,
-card44,
-card45,
-card46,
-card47,
-card48,
-card49,
-card50,
-card51,
-card52]
+  card2,
+  card3,
+  card4,
+  card5,
+  card6,
+  card7,
+  card8,
+  card9,
+  card10,
+  card11,
+  card12,
+  card13,
+  card14,
+  card15,
+  card16,
+  card17,
+  card18,
+  card19,
+  card20,
+  card21,
+  card22,
+  card23,
+  card24,
+  card25,
+  card26,
+  card27,
+  card28,
+  card29,
+  card30,
+  card31,
+  card32,
+  card33,
+  card34,
+  card35,
+  card36,
+  card37,
+  card38,
+  card39,
+  card40,
+  card41,
+  card42,
+  card43,
+  card44,
+  card45,
+  card46,
+  card47,
+  card48,
+  card49,
+  card50,
+  card51,
+  card52]
 
 
 
@@ -119,23 +117,38 @@ deck_1 = Deck.new([])
 deck_2 = Deck.new([])
 
 
-#this part deals out cards to both players.
+#this while loop deals out cards to both players.
 while all_cards.length > 1 #if we are given an un even number of cards, then the last card will not be assighned to either player.
   card_b = all_cards.sample
-  deck_2.add_card(all_cards.sample)
+  deck_2.add_card(card_b)
   all_cards.delete_at(all_cards.index(card_b))
 
   card_a = all_cards.sample
-  deck_1.add_card(all_cards.sample)
+  deck_1.add_card(card_a)
   all_cards.delete_at(all_cards.index(card_a))
 
 end
 
 player_a = Player.new("Aurora", deck_1)
-player_m = Player.new("Megan", deck_2
+player_m = Player.new("Megan", deck_2)
 
+game = Game.new(player_a, player_m)
 
+game.start
 
+#this while loop continually repeats turns
+#untill someone wins or we run out of turns
+while game.continue_game? == true
+  game.increment_turn_counter
+  this_turn = Turn.new(game.player1, game.player2)
 
+  the_winner = this_turn.winner
 
-  
+  this_turn.pile_cards
+  this_turn.award_spoils(the_winner)
+
+  p game.printable_results_of_a_turn(the_winner, this_turn)
+
+end
+
+p game.end_message
