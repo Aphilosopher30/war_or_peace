@@ -26,17 +26,18 @@ class Card_generator
     new_list = []
     list.each do |string|
       sub_list = string.split(",")
-
       striped_sub_list = sub_list.map do |element|
         element.strip
       end
-      
       new_list << striped_sub_list
     end
-
     return new_list
   end
 
+
+  def create_card(information)
+    
+  end
 
 
 end

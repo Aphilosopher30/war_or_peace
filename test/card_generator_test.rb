@@ -60,7 +60,17 @@ class Card_generatorTest < Minitest::Test
     assert_equal expected_list, generator.parse_list(list)
   end
 
+  def test_crate_card
+    starting_list = ['King', 'Heart', '13']
+    generator = Card_generator.new("./test/cards_file_test.txt")
+    new_card = generator.create_card(starting_list)
 
+    assert_instance_of Card, new_card
+    assert_equal "King", new_card.number
+    assert_equal :heart, new_card.suit
+    assert_equal 13, new_card.value
+
+  end
 
 
 end
